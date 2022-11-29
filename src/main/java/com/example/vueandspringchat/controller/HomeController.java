@@ -43,6 +43,10 @@ public class HomeController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //ファイル名をDBに保存
+        service.insertImgFile(form.getId(), fileName);
+
+        //保存したファイル名を取得
         Optional<SignUp> list = service.findById(form.getId());
         SignUpDto dto = toSignUpDto(list.get());
         return dto;

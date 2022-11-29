@@ -16,5 +16,5 @@ public interface SignUpRepository extends JpaRepository<SignUp, Integer> {
 
     @Modifying
     @Query(value ="update signup set file_name = :fileName where id = :id",nativeQuery=true)
-    SignUp insertImgFile(@Param("id")Integer id,@Param("fileName")String fileName);
+    void insertImgFile(@Param("id")Integer id,@Param("fileName")String fileName);
 }

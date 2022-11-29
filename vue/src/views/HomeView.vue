@@ -7,7 +7,9 @@
       <v-sheet color="grey lighten-4" class="pa-4">
         <label>
           <v-avatar class="mb-4" color="grey darken-1" size="64">
-            <img :src="require('@/assets/img/userIcon/' + this.imgName)" />
+            <img
+              :src="require('@/assets/img/userIcon/' + this.imgName.name)"
+            />
             <input
               type="file"
               ref="fileInput"
@@ -61,7 +63,8 @@ export default {
       .then((response) => {
         //IDに基づいたアイコン画像名の取得
         const data = response.data;
-        this.imgName = data.imgFile;
+        const name = data.imgFile;
+        this.$set(this.imgName, "name", name);
       });
   },
   data: () => ({
@@ -70,7 +73,9 @@ export default {
     links: [["mdi-logout", "logout"]],
     id: sessionStorage.getItem("id"),
     email: sessionStorage.getItem("email"),
-    imgName: ""
+    imgName: {
+      name: "",
+    },
   }),
   methods: {
     updateIcon() {
@@ -86,7 +91,9 @@ export default {
 
       axios.post("/insertImg", formData).then((response) => {
         const data = response.data;
-        this.imgFile = data.imgFile;
+        const name = data.imgFile;
+        console.log("name",name)
+        this.$set(this.imgName, "name", name);
       });
 
       //JavaScriptメモ(ファイル名だけを取り出す方法)
