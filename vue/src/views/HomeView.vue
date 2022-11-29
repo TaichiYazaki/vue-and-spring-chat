@@ -1,18 +1,96 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app id="inspire">
+    <v-app-bar app shrink-on-scroll>
+      <v-toolbar-title>ルーム一覧</v-toolbar-title>
+    </v-app-bar>
+    <v-navigation-drawer v-model="drawer" app>
+      <v-sheet color="grey lighten-4" class="pa-4">
+        <label>
+          <v-avatar class="mb-4" color="grey darken-1" size="64">
+            <input
+              type="file"
+              ref="fileInput"
+              accept="image/jpeg, image/jpg, image/png"
+              style="display: none"
+              name="files"
+              @change="updateIcon"
+            />
+          </v-avatar>
+          <!-- <img :src="imgUrl"> -->
+        </label>
+        <div>
+          {{ email }}
+        </div>
+      </v-sheet>
+
+      <v-list>
+        <v-list-item v-for="[icon, text] in links" :key="icon" link>
+          <v-list-item-icon>
+            <v-icon>{{ icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ text }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-main>
+      <v-container>
+        <v-row>
+          <v-col v-for="n in 6" :key="n" cols="4">
+            <v-avatar color="teal" size="128"></v-avatar>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import axios from "axios";
 export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
-  }
-}
+  //  this.fileName = "@/Users/YAZAKITAICHI/env/vs-code/vue-weather/vue/src/assets/userIcon/"+imgName;
+  mounted() {
+    axios
+      .get("/findById", {
+        params: {
+          id: this.id,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+      });
+  },
+  data: () => ({
+    cards: ["Today", "Yesterday"],
+    drawer: null,
+    links: [["mdi-logout", "logout"]],
+    id: sessionStorage.getItem("id"),
+    email: sessionStorage.getItem("email"),
+  }),
+  methods: {
+    updateIcon() {
+      //ファイルの情報を取得
+      const file = this.$refs.fileInput.files[0];
+      /**
+       * 処理結果で得られたJSONが、すでにJavascriptのオブジェクトに変換された状態のため、
+       * 表示用にJSONに変換する。
+       */
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("id", this.id);
+      // axios.post("/insertImg", formData).then((response) => {
+      //   const imgFile = response.data;
+      //   const imgName = imgFile.imgFile;
+
+      //  this.fileName = "@/Users/YAZAKITAICHI/env/vs-code/vue-weather/vue/src/assets/userIcon/"+imgName;
+      // });
+
+      //JavaScriptメモ(ファイル名だけを取り出す方法)
+      //const name = file.name
+    },
+  },
+};
 </script>
