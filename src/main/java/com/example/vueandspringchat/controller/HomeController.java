@@ -35,7 +35,7 @@ public class HomeController {
     @RequestMapping(value = "/insertImg", method = RequestMethod.POST)
     public SignUpDto updateIcon(LoginForm form, @RequestParam("file") MultipartFile file) {
         String fileName = file.getOriginalFilename();
-        Path filePath = Paths.get("/Users/YAZAKITAICHI/env/vs-code/vue-weather/vue/src/assets/userIcon/" + fileName);
+        Path filePath = Paths.get("/Users/YAZAKITAICHI/env/vs-code/vue-and-spring-chat/vue/src/assets/img/userIcon/" + fileName);
         try {
             byte[] bytes = file.getBytes();
             OutputStream stream = Files.newOutputStream(filePath);

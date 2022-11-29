@@ -7,6 +7,7 @@
       <v-sheet color="grey lighten-4" class="pa-4">
         <label>
           <v-avatar class="mb-4" color="grey darken-1" size="64">
+            <img :src="require('@/assets/img/userIcon/' + this.imgName)" />
             <input
               type="file"
               ref="fileInput"
@@ -16,7 +17,6 @@
               @change="updateIcon"
             />
           </v-avatar>
-          <!-- <img :src="imgUrl"> -->
         </label>
         <div>
           {{ email }}
@@ -51,7 +51,6 @@
 <script>
 import axios from "axios";
 export default {
-  //  this.fileName = "@/Users/YAZAKITAICHI/env/vs-code/vue-weather/vue/src/assets/userIcon/"+imgName;
   mounted() {
     axios
       .get("/findById", {
@@ -60,7 +59,9 @@ export default {
         },
       })
       .then((response) => {
-        console.log(response);
+        //IDに基づいたアイコン画像名の取得
+        const data = response.data;
+        this.imgName = data.imgFile;
       });
   },
   data: () => ({
@@ -69,6 +70,7 @@ export default {
     links: [["mdi-logout", "logout"]],
     id: sessionStorage.getItem("id"),
     email: sessionStorage.getItem("email"),
+    imgName: ""
   }),
   methods: {
     updateIcon() {
@@ -81,12 +83,11 @@ export default {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("id", this.id);
-      // axios.post("/insertImg", formData).then((response) => {
-      //   const imgFile = response.data;
-      //   const imgName = imgFile.imgFile;
 
-      //  this.fileName = "@/Users/YAZAKITAICHI/env/vs-code/vue-weather/vue/src/assets/userIcon/"+imgName;
-      // });
+      axios.post("/insertImg", formData).then((response) => {
+        const data = response.data;
+        this.imgFile = data.imgFile;
+      });
 
       //JavaScriptメモ(ファイル名だけを取り出す方法)
       //const name = file.name
