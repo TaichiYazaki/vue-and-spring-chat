@@ -2,7 +2,6 @@
   <v-app id="inspire">
     <v-app-bar app shrink-on-scroll>
       <v-toolbar-title>ルーム一覧</v-toolbar-title>
-      
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" app>
       <v-sheet color="grey lighten-4" class="pa-4">
@@ -23,13 +22,12 @@
           {{ email }}
         </div>
       </v-sheet>
-      <rooms />
       <v-list-item @click="createRoom">
         <v-list-item-icon>
           <v-icon color="green"> mdi-sprout-outline</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title>ルーム作成</v-list-item-title>
+          <rooms />
         </v-list-item-content>
       </v-list-item>
       <v-list-item @click="logout">
@@ -56,10 +54,10 @@
 
 <script>
 import axios from "axios";
-import rooms from "@/components/modal/RoomsView"
+import rooms from "@/components/modal/RoomsView";
 export default {
   components: {
-    rooms
+    rooms,
   },
   mounted() {
     axios

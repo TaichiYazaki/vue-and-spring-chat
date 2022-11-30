@@ -2,11 +2,11 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">
+        <v-text v-bind="attrs" v-on="on" display="none">
           Create Room
-        </v-btn>
+        </v-text>
       </template>
-      <v-card>
+    <!--  <v-card>
         <v-card-title>
           <span class="text-h5">New Room</span>
         </v-card-title>
@@ -42,3 +42,4 @@
     </v-dialog>
   </v-row>
 </template>
+-->
