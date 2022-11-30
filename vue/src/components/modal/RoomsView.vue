@@ -30,7 +30,7 @@
         <v-spacer></v-spacer>
         <div class="roomsBtn">
           <v-btn color="success" class="roomBtn"> 作成 </v-btn>
-          <v-btn color="error" class="roomBtn"> クリア </v-btn>
+          <v-btn color="error" class="roomBtn" @click="clear"> クリア </v-btn>
           <v-btn color="primary" text @click="dialog = false"> 戻る </v-btn>
         </div>
       </v-card-actions>
@@ -40,19 +40,25 @@
     
 <script>
 export default {
-  data() {
-    return {
-      dialog: false,
-    };
-  },
+  data: () => ({
+    name: "",
+    file: "",
+    dialog: false,
+  }),
+  methods: {
+    clear(){
+        this.name = "",
+        this.file = ""
+    }
+  }
 };
 </script>
 
 <style>
 .roomsBtn {
- padding-right: 150px;
+  padding-right: 150px;
 }
 .roomBtn {
- margin-right: 20px;
+  margin-right: 20px;
 }
 </style>
