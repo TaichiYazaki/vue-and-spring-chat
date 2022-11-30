@@ -22,7 +22,7 @@
           {{ email }}
         </div>
       </v-sheet>
-      <v-list-item @click="createRoom">
+      <v-list-item>
         <v-list-item-icon>
           <v-icon color="green"> mdi-sprout-outline</v-icon>
         </v-list-item-icon>
@@ -104,9 +104,6 @@ export default {
 
       //JavaScriptメモ(ファイル名だけを取り出す方法)
       //const name = file.name
-    },
-    createRoom() {
-      this.$router.push("/createRoom");
     },
     logout() {
       this.$router.push("/login");
