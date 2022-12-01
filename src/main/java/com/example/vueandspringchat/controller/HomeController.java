@@ -54,7 +54,6 @@ public class HomeController {
 
     @RequestMapping(value = "/findById", method = RequestMethod.GET)
     public SignUpDto findById(Integer id){
-        System.out.println(id);
         Optional<SignUp> list = service.findById(id);
         SignUpDto dto = toSignUpDto(list.get());
         return dto;

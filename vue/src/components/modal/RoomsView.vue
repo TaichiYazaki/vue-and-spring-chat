@@ -4,8 +4,8 @@
       <v-text v-bind="attrs" v-on="on" display="none"> Create Room </v-text>
     </template>
     <v-card>
+        <v-form>
       <v-card-title class="text-h5 grey lighten-2"> ルーム作成 </v-card-title>
-
       <v-card-text>
         <v-container>
           <v-row>
@@ -29,28 +29,45 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <div class="roomsBtn">
-          <v-btn color="success" class="roomBtn"> 作成 </v-btn>
+          <v-btn color="success" class="roomBtn" @click="submit"> 作成 </v-btn>
           <v-btn color="error" class="roomBtn" @click="clear"> クリア </v-btn>
           <v-btn color="primary" text @click="dialog = false"> 戻る </v-btn>
         </div>
       </v-card-actions>
+      </v-form>
     </v-card>
  
 </template>
     
 <script>
+import axios from "axios";
 export default {
   data: () => ({
     name: "",
-    file: "",
+    file: null,
     dialog: false,
   }),
   methods: {
-    clear(){
-        this.name = "",
-        this.file = ""
-    }
-  }
+    clear() {
+      (this.name = ""), (this.file = "");
+    },
+    submit() {
+      /**
+       * 処理結果で得られたJSONが、すでにJavascriptのオブジェクトに変換された状態のため、
+       * 表示用にJSONに変換する。
+       */
+      const formData = new FormData();
+      formData.append("file", this.file);
+      const config = {
+          header: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
+      axios.post("/roomInfo?roomName="+this.name,formData,config).then((response) => {
+        console.log("response",response)
+      })
+    },
+  },
 };
 </script>
 
