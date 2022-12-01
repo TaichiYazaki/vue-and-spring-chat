@@ -1,9 +1,10 @@
 package com.example.vueandspringchat.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.vueandspringchat.dto.RoomsDto;
 import com.example.vueandspringchat.entity.Rooms;
 import com.example.vueandspringchat.repository.RoomsRepository;
 
@@ -18,5 +19,9 @@ public class RoomsService {
         rooms.setName(name);
         rooms.setFile(file);
         return repository.save(rooms);
+    }
+
+    public List<Rooms> showRooms(){
+        return repository.findAll();
     }
 }

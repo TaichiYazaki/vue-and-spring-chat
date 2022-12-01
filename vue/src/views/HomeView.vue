@@ -43,8 +43,10 @@
     <v-main>
       <v-container>
         <v-row>
-          <v-col v-for="n in 6" :key="n" cols="4">
-            <v-avatar color="teal" size="128"></v-avatar>
+          <v-col v-for="room in rooms" :key="room">
+            <v-avatar color="primary" size="70">
+              <img :src="require('@/assets/img/roomIcon/' + room.file)" />
+            </v-avatar>
           </v-col>
         </v-row>
       </v-container>
@@ -60,17 +62,33 @@ export default {
     rooms,
   },
   mounted() {
-    axios
-      .get("/findById", {
-        params: {
-          id: this.id,
-        },
-      })
+    Promise.resolve()
+      // 1個目の通信 ログインしたユーザーのidを取得する処理
+      .then(() =>
+        axios.get("/findById", {
+          params: {
+            id: this.id,
+          },
+        })
+      )
       .then((response) => {
-        //IDに基づいたアイコン画像名の取得
+        // 1個目の通信 成功
         const data = response.data;
         const name = data.imgFile;
         this.$set(this.imgName, "name", name);
+        // 2個目の通信 ルーム一覧を取得する処理
+        return axios.get("/showRooms");
+      })
+      .then((response) => {
+        // 2個目の通信 成功
+        const rooms = response.data;
+        for (const room of rooms) {
+          this.rooms.push(room);
+        }
+      })
+      .catch((e) => {
+        // エラーが発生
+        console.log(e);
       });
   },
   data: () => ({
@@ -82,6 +100,7 @@ export default {
     imgName: {
       name: "",
     },
+    rooms: [],
   }),
   methods: {
     updateIcon() {
@@ -98,7 +117,6 @@ export default {
       axios.post("/insertImg", formData).then((response) => {
         const data = response.data;
         const name = data.imgFile;
-        console.log("name", name);
         this.$set(this.imgName, "name", name);
       });
 
