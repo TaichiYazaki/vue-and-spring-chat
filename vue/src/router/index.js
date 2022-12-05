@@ -4,6 +4,7 @@ import SignUp from '../views/SignUp.vue'
 import Login from '../views/LoginPage.vue'
 import HomeView from '../views/HomeView.vue'
 import CreateRoom from '../views/CreateRoom.vue'
+import ChatBoard from '../components/ChatBoard.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/createRoom',
     name: 'createRoom',
     component: CreateRoom
+  },
+  {
+    path: '/chatBoard',
+    name: 'chatBoard',
+    component: ChatBoard
   },
 ]
 

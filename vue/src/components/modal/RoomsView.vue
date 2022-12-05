@@ -36,7 +36,7 @@
       </v-card-actions>
       </v-form>
     </v-card>
- 
+  </v-dialog>
 </template>
     
 <script>
