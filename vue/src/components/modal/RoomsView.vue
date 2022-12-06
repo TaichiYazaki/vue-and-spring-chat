@@ -63,9 +63,7 @@ export default {
             "Content-Type": "multipart/form-data",
           },
         };
-      axios.post("/roomInfo?roomName="+this.name,formData,config).then((response) => {
-        console.log("response",response)
-      })
+      axios.post("/roomInfo?roomName="+this.name,formData,config)
     },
   },
 };

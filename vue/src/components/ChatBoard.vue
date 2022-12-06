@@ -52,10 +52,45 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
+  created() {
+    //ユーザーアイコンの取得
+    axios.get("/findById", {
+      params: {
+        id: this.userId,
+      },
+    }).then((response) => {
+        // 1個目の通信 成功
+        const data = response.data;
+        const name = data.imgFile;
+        this.$set(this.imgName, "name", name);
+      })
+      .catch((e) => {
+        // エラーが発生
+        console.log(e);
+      });
+    //ルームIDの取得
+    this.roomId = this.$route.query.room_id;
+    //ユーザーアイコンの取得
+  },
+  methods: {
+    submit(){
+      const data = new FormData()
+      data.append("message", this.body)
+      data.append("userId", this.userId)
+      data.append("roomId", this.roomId)
+      axios.post("/submit",data)
+    }
+  },
   data: () => ({
-    cards: ["Today", "Yesterday"],
+    roomId: "",
+    userId: sessionStorage.getItem("id"),
     drawer: null,
+    imgName: {
+      name: "",
+    },
+    body:""
   }),
 };
 </script>
