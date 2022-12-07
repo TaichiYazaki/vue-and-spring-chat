@@ -71,7 +71,6 @@ public class HomeController {
     @RequestMapping(value = "/showRooms", method = RequestMethod.GET)
     public List<RoomsDto> showRooms() {
         List<RoomsDto> dto = toRoomsDto(roomsService.showRooms());
-        System.out.println(dto);
         return dto;
     }
 
