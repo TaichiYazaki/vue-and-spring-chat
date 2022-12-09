@@ -1,15 +1,21 @@
 package com.example.vueandspringchat.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
+import lombok.ToString;
+
 
 @Entity
 @Table(name = "signup")
@@ -31,4 +37,13 @@ public class SignUp {
 
     @Column(name = "file_name")
     private String fileName;
+
+    @OneToMany(mappedBy="signup", cascade=CascadeType.ALL)
+    @ToString.Exclude // @Dataを利用した場合、ハッシュコードエラーを回避するために必要
+    @JsonIgnore // jackson.databindのエラーを回避するために必要
+    private List<Chats> chats;
+
+
+
+    
 }

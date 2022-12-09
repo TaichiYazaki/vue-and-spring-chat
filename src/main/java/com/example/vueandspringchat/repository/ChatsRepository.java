@@ -10,13 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.example.vueandspringchat.entity.Chats;
 
 @Repository
-public interface ChatsRepository extends JpaRepository<Chats, String> {
+public interface ChatsRepository extends JpaRepository<Chats, Integer> {
 
-    @Query(value = "select c.id, c.room_id, c.user_id, c.message, c.created_at,"
-            + " m.id,m.name,m.email,m.password,m.file_name"
-            + " from chats as c"
-            + " join signup as m"
-            + " on c.user_id = m.id"
-            + " where c.room_id = :roomId", nativeQuery = true)
+    @Query("SELECT DISTINCT e FROM Chats e INNER JOIN e.signup WHERE e.roomId = :roomId ")
     List<Chats> findByRoomId(@Param("roomId") Integer roomId);
 }

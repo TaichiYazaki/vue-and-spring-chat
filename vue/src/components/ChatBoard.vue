@@ -6,21 +6,26 @@
           <v-col cols="12">
             <v-card>
               <v-list two-line>
-                <template v-for="n in 6">
-                  <v-list-item :key="n">
-                    <v-list-item-avatar color="grey darken-1">
+                <template v-for="(chat, id) in chats">
+                  <v-list-item :key="id">
+                    <v-list-item-avatar color="grey darken-1" size="70">
+                      <img
+                        :src="
+                          require('@/assets/img/userIcon/' +
+                            chat.signup.fileName)
+                        "
+                      />
+                      
                     </v-list-item-avatar>
-
                     <v-list-item-content>
                       <v-list-item-subtitle>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Nihil repellendus distinctio similique
+                        {{ chat.message }}
                       </v-list-item-subtitle>
                     </v-list-item-content>
                   </v-list-item>
                   <v-divider
                     v-if="n !== 6"
-                    :key="`divider-${n}`"
+                    :key="`divider-${id}`"
                     inset
                   ></v-divider>
                 </template>
@@ -57,23 +62,23 @@ export default {
   created() {
     //ユーザーアイコンの取得
     axios
-      .get("/getChats", {
+      .get("/chats", {
         params: {
           roomId: this.$route.query.room_id,
         },
       })
-    //   .then((response) => {
-    //     const data = response.data;
-    //     const name = data.imgFile;
-    //     this.$set(this.imgName, "name", name);
-    //   })
-    //   .catch((e) => {
-    //     // エラーが発生
-    //     console.log(e);
-    //   });
-    // //ルームIDの取得
-    // this.roomId = this.$route.query.room_id;
-    // //ユーザーアイコンの取得
+      .then((response) => {
+        const data = response.data;
+        for (const room of data) {
+          this.chats.push(room);
+        }
+
+        console.log(this.chats);
+      })
+      .catch((e) => {
+        // エラーが発生
+        console.log(e);
+      });
   },
   methods: {
     submit() {
@@ -88,10 +93,23 @@ export default {
     roomId: "",
     userId: sessionStorage.getItem("id"),
     drawer: null,
-    imgName: {
-      name: "",
-    },
     body: "",
+    chats: [
+      // {
+      //   id: "",
+      //   message: "",
+      //   roomId: "",
+      //   userId: "",
+      //   createdAt: "",
+      //   signup: {
+      //     id: "",
+      //     name: "",
+      //     email: "",
+      //     password: "",
+      //     fileName: "",
+      //   },
+      // },
+    ],
   }),
 };
 </script>

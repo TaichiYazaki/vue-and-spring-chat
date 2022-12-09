@@ -1,5 +1,6 @@
 package com.example.vueandspringchat.controller;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +29,10 @@ public class ChatsController {
         service.save(dto);
     }
 
-    @GetMapping(value = "/getChats")
-    public void getMethodName(ChatsForm form) {
-
-        List<Chats> list = service.findByRoomId(form.getRoomId());
-
-        System.out.println(list);
+    @GetMapping(value = "/chats")
+    public List<Chats> getMethodName(ChatsForm form) {
+        List<Chats> lists = service.findByRoomId(form.getRoomId());
+         return lists;
 
     }
 
