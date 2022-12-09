@@ -1,5 +1,6 @@
 <template>
   <v-app id="inspire">
+    <sidebarChat />
     <v-main>
       <v-container class="py-8 px-6" fluid>
         <v-row>
@@ -15,7 +16,6 @@
                             chat.signup.fileName)
                         "
                       />
-                      
                     </v-list-item-avatar>
                     <v-list-item-content>
                       <v-list-item-subtitle>
@@ -58,7 +58,11 @@
 
 <script>
 import axios from "axios";
+import sidebarChat from "@/components/layouts/SideBarChat";
 export default {
+  components: {
+    sidebarChat,
+  },
   created() {
     //ユーザーアイコンの取得
     axios
@@ -94,22 +98,7 @@ export default {
     userId: sessionStorage.getItem("id"),
     drawer: null,
     body: "",
-    chats: [
-      // {
-      //   id: "",
-      //   message: "",
-      //   roomId: "",
-      //   userId: "",
-      //   createdAt: "",
-      //   signup: {
-      //     id: "",
-      //     name: "",
-      //     email: "",
-      //     password: "",
-      //     fileName: "",
-      //   },
-      // },
-    ],
+    chats: [],
   }),
 };
 </script>
